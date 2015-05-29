@@ -1,0 +1,25 @@
+{
+  "name": "switter",
+  "version": "0.0.1",
+  "description": "Small twitter",
+  "main": "index.coffee",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.4",
+    "lodash": "^3.9.3",
+    "mysql": "^2.6.2",
+    "sequelize": "^3.1.1"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.9.3",
+    "connect-livereload": "^0.5.3",
+    "grunt": "^0.4.5",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-express-server": "^0.5.1",
+    "grunt-open": "^0.2.3"
+  }
+}
