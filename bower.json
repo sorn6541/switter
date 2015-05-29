@@ -1,0 +1,25 @@
+{
+  "name": "switter",
+  "version": "0.0.1",
+  "authors": [
+    "ParkSunwoo <nt99135@nhn.com>"
+  ],
+  "description": "simple twitter",
+  "main": "src/index.coffee",
+  "moduleType": [
+    "node"
+  ],
+  "license": "ISC",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.4",
+    "bootstrap": "~3.3.4",
+    "react": "~0.13.3"
+  }
+}
