@@ -6,19 +6,19 @@ module.exports = (grunt) ->
           script: 'src/index.coffee'
           opts: ['node_modules/coffee-script/bin/coffee']
           debug: true
-          port: 4000
+          port: 3000
           
     watch:
       express:
         files: ['src/**/*.coffee']
         tasks: ['express:dev','wait']
         options: 
-          livereload: 35729
+          livereload: true
           spawn: false
       livereload:
         files:['src/**/*.html']
         options:
-          livereload: 35729
+          livereload: true
     
     open: 
       server: 
@@ -28,10 +28,10 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-open'
 
-  grunt.registerTask 'wait', () ->
+  grunt.registerTask 'wait', ->
     grunt.log.ok 'Waiting for server reload...'
     done = this.async()
-    setTimeout () ->
+    setTimeout ->
       grunt.log.writeln 'Done waiting!'
       done()
     ,1500
