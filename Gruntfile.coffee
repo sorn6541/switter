@@ -8,6 +8,14 @@ module.exports = (grunt) ->
           debug: true
           port: 3000
           
+    cjsx:
+      compile:
+        expand: true
+        cwd:'src/public/js/coffee'
+        src:'*.coffee'
+        dest:'src/public/js'
+        ext:'.js'
+          
     watch:
       express:
         files: ['src/**/*.coffee']
@@ -19,11 +27,21 @@ module.exports = (grunt) ->
         files:['src/**/*.html']
         options:
           livereload: true
+      gruntFile:
+        files:['Gruntfile.coffee']
+        options:
+          reload:true
+      cjsx:
+        files: ['src/public/js/coffee/*.coffee']
+        tasks: ['cjsx:compile']
+        options:
+          livereload: true
     
     open: 
       server: 
         url: 'http://localhost:3000'
 
+  grunt.loadNpmTasks 'grunt-coffee-react'
   grunt.loadNpmTasks 'grunt-express-server'
   grunt.loadNpmTasks 'grunt-contrib-watch'
   grunt.loadNpmTasks 'grunt-open'
@@ -35,10 +53,8 @@ module.exports = (grunt) ->
       grunt.log.writeln 'Done waiting!'
       done()
     ,1500
-    
-    
   
   
-  grunt.registerTask 'dev', ['express:dev','wait','open','watch']
+  grunt.registerTask 'dev', ['cjsx:compile','express:dev','wait','open','watch']
   
   
