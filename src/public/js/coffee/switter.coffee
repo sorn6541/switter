@@ -1,12 +1,29 @@
 WriteForm = React.createClass
+  handleSubmit: (e)->
+    e.preventDefault()
+    getValue = (ref) =>
+      this.refs[ref].getDOMNode().value.trim()
+    setValue = (ref,value) =>
+      this.refs[ref].getDOMNode().value = value
+    
+    nick = getValue 'nick'
+    content = getValue 'content'
+    setValue 'nick',''
+    setValue 'content',''
+    $.post '/api/sweet',
+      nick: nick
+      content: content,
+      (data)->
+        sweetList.setState data:data
+    
   render: ->
     <div className="container-fluid">
-      <form action="index.html" method="post">
+      <form onSubmit={this.handleSubmit}>
         <div className="form-group col-xs-12 col-sm-6 col-md-4">
-          <input type="text" placeholder="nick" className="form-control" />
+          <input type="text" placeholder="nick" className="form-control" ref="nick" />
         </div>
         <div className="form-group col-xs-12 col-md-10">
-          <textarea rows="3" className="form-control" placeholder="140" ></textarea>
+          <textarea rows="3" className="form-control" placeholder="140" ref="content" ></textarea>
         </div>
         <div className="form-group col-xs-12 col-md-2">
           <button className="btn btn-default btn-block">글 쓰기</button>
@@ -15,21 +32,34 @@ WriteForm = React.createClass
     </div>
 
 SweetList = React.createClass
+  getInitialState: ->
+    data:[]
+
+  componentDidMount: ->
+    $.getJSON '/api/sweet', (data) =>
+      this.setState data:data
+  
   render: ->
+    sweetNodes = this.state.data.map (sweet,index) ->
+      <Sweet key={index} nick={sweet.nick} content={sweet.content} />
+    
     <ul className="list-group">
-      <li className="list-group-item">
-        <h4>nickname</h4>
-        <p>
-          Cupidatat minim ut non cupidatat tempor do voluptate. Id do laboris nulla fugiat minim ipsum pariatur cupidatat sint occaecat nostrud sint. Esse nisi laborum incididunt amet deserunt amet ea minim do officia sint adipisicing excepteur. Reprehenderit amet deserunt consectetur fugiat velit tempor proident consectetur excepteur. Elit voluptate fugiat ex consequat incididunt do veniam. Ea velit eiusmod occaecat veniam sunt dolor tempor. Anim exercitation irure excepteur aute ad amet sint ex. Qui excepteur aute esse tempor aute consectetur minim et ad excepteur incididunt. Ullamco culpa excepteur minim culpa in consequat.
-        </p>
-      </li>
-      <li className="list-group-item">
-        <h4>nickname</h4>
-        <p>
-          Est sit amet minim id tempor.
-        </p>
-      </li>
+      {sweetNodes}
     </ul>
 
-React.render <WriteForm />, $('writeform')[0]
-React.render <SweetList />, document.getElementById 'sweetlist'
+Sweet = React.createClass
+  render: ->
+    <li className="list-group-item">
+      <h4>
+        {this.props.nick}
+      </h4>
+      <p>
+        {this.props.content}
+      </p>
+    </li>
+
+writeForm = React.render <WriteForm />, document.getElementById 'writeform'
+sweetList = React.render <SweetList />, document.getElementById 'sweetlist'
+
+console.log wf
+console.log sweetList
