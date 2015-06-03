@@ -24,4 +24,7 @@ app.post '/api/sweet', (req,res) ->
 
 
 
-app.listen 3000
+app.listen 3000, ->
+  console.log "Server run..."
+
+exports = module.exports = app

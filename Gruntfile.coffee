@@ -1,11 +1,14 @@
 module.exports = (grunt) ->
+  require('jit-grunt') grunt,
+    cjsx: 'grunt-coffee-react'
+    express: 'grunt-express-server'
+    
   grunt.initConfig 
     express:
       dev: 
         options: 
           script: 'src/index.coffee'
           opts: ['node_modules/coffee-script/bin/coffee']
-          debug: true
           port: 3000
           
     cjsx:
@@ -41,11 +44,6 @@ module.exports = (grunt) ->
       server: 
         url: 'http://localhost:3000'
 
-  grunt.loadNpmTasks 'grunt-coffee-react'
-  grunt.loadNpmTasks 'grunt-express-server'
-  grunt.loadNpmTasks 'grunt-contrib-watch'
-  grunt.loadNpmTasks 'grunt-open'
-
   grunt.registerTask 'wait', ->
     grunt.log.ok 'Waiting for server reload...'
     done = this.async()
@@ -55,6 +53,5 @@ module.exports = (grunt) ->
     ,1500
   
   
-  grunt.registerTask 'dev', ['cjsx:compile','express:dev','wait','open','watch']
-  
-  
+  grunt.registerTask 'dev', ['cjsx:compile','express:dev','wait','open:server','watch']
+    
