@@ -61,5 +61,5 @@ Sweet = React.createClass
 writeForm = React.render <WriteForm />, document.getElementById 'writeform'
 sweetList = React.render <SweetList />, document.getElementById 'sweetlist'
 
-console.log wf
+console.log writeForm
 console.log sweetList

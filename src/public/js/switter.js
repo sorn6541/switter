@@ -97,7 +97,7 @@
 
   sweetList = React.render(React.createElement(SweetList, null), document.getElementById('sweetlist'));
 
-  console.log(wf);
+  console.log(writeForm);
 
   console.log(sweetList);
 
