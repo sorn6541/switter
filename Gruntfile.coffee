@@ -16,8 +16,22 @@ module.exports = (grunt) ->
         expand: true
         cwd:'src/public/js/coffee'
         src:'*.coffee'
-        dest:'src/public/js'
+        dest:'src/public/.tmp/js'
         ext:'.js'
+        options:
+          bare: true
+        
+    injector:
+      options:
+        relative: true
+      bower:
+        files:
+          'src/public/index.html': ['bower.json']
+        options:
+          bowerPrefix: 'bower_'
+      js:
+        files:
+          'src/public/index.html': ['src/public/.tmp/js/*.js']
           
     watch:
       express:
@@ -36,7 +50,7 @@ module.exports = (grunt) ->
           reload:true
       cjsx:
         files: ['src/public/js/coffee/*.coffee']
-        tasks: ['cjsx:compile']
+        tasks: ['newer:cjsx:compile','injector:js']
         options:
           livereload: true
     
@@ -53,5 +67,5 @@ module.exports = (grunt) ->
     ,1500
   
   
-  grunt.registerTask 'dev', ['cjsx:compile','express:dev','wait','open:server','watch']
+  grunt.registerTask 'dev', ['cjsx:compile','injector','express:dev','wait','open:server','watch']
     
